@@ -5,7 +5,6 @@ import android.os.BatteryManager
 
 data class BatteryImpactSnapshot(
     val geckoTabsMw: Int,
-    val torDaemonMw: Int,
     val mediaAndServicesMw: Int,
     val totalMw: Int,
     val withinPf9Budget: Boolean
@@ -25,9 +24,6 @@ class BatteryImpactMonitor(private val context: Context) {
     fun estimateSessionPower(
         activeBackgroundTabs: Int,
         suspendedTabs: Int,
-        torConnected: Boolean,
-        torPrewarm: Boolean,
-        bridgeOverheadMw: Int,
         liteMode: Boolean,
         backgroundWorkLimited: Boolean
     ): BatteryImpactSnapshot {
@@ -35,18 +31,11 @@ class BatteryImpactMonitor(private val context: Context) {
         val backgroundMw = activeBackgroundTabs * 48 + suspendedTabs * 4
         val geckoTabsMw = foregroundMw + backgroundMw
 
-        val torDaemonMw = when {
-            torConnected -> 135 + bridgeOverheadMw
-            torPrewarm -> 22
-            else -> 0
-        }
-
         val servicesMw = if (backgroundWorkLimited) 14 else 44
-        val total = geckoTabsMw + torDaemonMw + servicesMw
+        val total = geckoTabsMw + servicesMw
 
         return BatteryImpactSnapshot(
             geckoTabsMw = geckoTabsMw,
-            torDaemonMw = torDaemonMw,
             mediaAndServicesMw = servicesMw,
             totalMw = total,
             withinPf9Budget = total <= PF9_BUDGET_MW

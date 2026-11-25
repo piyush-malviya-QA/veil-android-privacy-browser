@@ -2,7 +2,6 @@ package com.veil.browser.downloads
 
 import com.veil.browser.data.DownloadChunkDao
 import com.veil.browser.data.DownloadChunkEntity
-import com.veil.browser.tor.TorManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -12,33 +11,19 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
 import java.io.RandomAccessFile
-import java.net.InetSocketAddress
-import java.net.Proxy
 
 class SegmentedDownloadManager(
     private val chunkDao: DownloadChunkDao
 ) {
-    private fun buildClient(viaTor: Boolean): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-        if (viaTor) {
-            // TOR-5: Downloads started in Tor mode route through local Tor SOCKS5
-            val proxy = Proxy(
-                Proxy.Type.SOCKS,
-                InetSocketAddress(TorManager.SOCKS_HOST, TorManager.socksPort)
-            )
-            builder.proxy(proxy)
-        }
-        return builder.build()
-    }
+    private fun buildClient(): OkHttpClient = OkHttpClient.Builder().build()
 
     suspend fun download(
         downloadId: String,
         url: String,
         destination: File,
-        viaTor: Boolean,
         desiredSegments: Int = 6
     ) = withContext(Dispatchers.IO) {
-        val client = buildClient(viaTor)
+        val client = buildClient()
 
         // DL-1: Issue HTTP HEAD to verify Accept-Ranges: bytes and Content-Length
         val headRequest = Request.Builder().url(url).head().build()

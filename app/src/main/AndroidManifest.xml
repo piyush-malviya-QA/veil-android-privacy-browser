@@ -37,11 +37,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Embedded Guardian Project Tor Daemon Service (TOR-1) -->
-        <service
-            android:name="org.torproject.jni.TorService"
-            android:exported="false" />
-
         <!-- Segmented Multi-Range Download Foreground Service (DL-2) -->
         <service
             android:name=".downloads.DownloadForegroundService"

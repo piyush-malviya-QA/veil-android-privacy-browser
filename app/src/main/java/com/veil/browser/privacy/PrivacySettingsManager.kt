@@ -22,8 +22,6 @@ class PrivacySettingsManager(private val runtime: GeckoRuntime) {
         runtime.settings.apply {
             preferredColorScheme = GeckoRuntimeSettings.COLOR_SCHEME_SYSTEM
         }
-        // Note: DoH TRR mode (network.trr.mode = 3) applies only outside Tor mode;
-        // Tor mode overrides DNS via network.proxy.socks_remote_dns = true.
     }
 
     // NF-P4: Auto-clear cookies, caches, and site storage on exit

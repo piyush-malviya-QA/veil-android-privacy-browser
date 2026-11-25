@@ -31,21 +31,13 @@ class PerformanceEngine(
         }
     }
 
-    // PF-5: Preconnect / DNS prefetch allowed only on clearnet; strictly disabled in Tor mode
-    fun shouldEnablePreconnectAndDnsPrefetch(torModeActive: Boolean, userEnabled: Boolean): Boolean {
-        if (torModeActive) return false
-        return userEnabled
-    }
-
-    // PF-7: Adaptive segmented download stream count by network tier & Tor routing
+    // PF-7: Adaptive segmented download stream count by network tier
     fun computeAdaptiveDownloadStreams(
         tier: NetworkTier,
-        viaTor: Boolean,
         adaptiveEnabled: Boolean,
         requested: Int = 6
     ): Int {
         if (!adaptiveEnabled) return requested.coerceIn(4, 8)
-        if (viaTor) return if (tier == NetworkTier.SLOW_3G) 2 else 4
         return when (tier) {
             NetworkTier.WIFI -> 8
             NetworkTier.CELLULAR -> 4

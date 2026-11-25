@@ -1,6 +1,6 @@
 # Veil — Android Privacy Browser
 
-A privacy-focused Android browser built on Mozilla GeckoView with embedded Tor.
+A privacy-focused Android browser built on Mozilla GeckoView.
 
 ## Build an APK locally (Android Studio / JDK 17)
 1. Open the folder in **Android Studio** (JDK 17) and let Gradle sync.
