@@ -24,7 +24,7 @@ class SegmentedDownloadManager(
             // TOR-5: Downloads started in Tor mode route through local Tor SOCKS5
             val proxy = Proxy(
                 Proxy.Type.SOCKS,
-                InetSocketAddress(TorManager.SOCKS_HOST, TorManager.SOCKS_PORT)
+                InetSocketAddress(TorManager.SOCKS_HOST, TorManager.socksPort)
             )
             builder.proxy(proxy)
         }
