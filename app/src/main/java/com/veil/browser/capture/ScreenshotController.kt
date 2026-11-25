@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.PixelCopy
 import android.view.SurfaceView
+import android.view.View
 import android.view.Window
 
 class ScreenshotController {
@@ -34,7 +35,7 @@ class ScreenshotController {
     fun bindSurfaceForScrollCapture(surfaceView: SurfaceView) {
         if (supportsScrollingCapture()) {
             // GeckoView attaches its native ScrollCaptureCallback to the host View hierarchy on API 31+
-            surfaceView.isImportantForAccessibility = SurfaceView.IMPORTANT_FOR_ACCESSIBILITY_YES
+            surfaceView.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
         }
     }
 }

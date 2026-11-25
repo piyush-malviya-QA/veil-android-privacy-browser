@@ -1,4 +1,4 @@
-name: Build Android APK (Firebase Enabled)
+name: Build Android APK
 
 on:
   push:
@@ -17,10 +17,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.11.1"
-      - name: Restore Firebase google-services.json from Secret (if configured)
-        if: ${{ secrets.GOOGLE_SERVICES_JSON_B64 != '' }}
-        run: |
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_B64 }}" | base64 --decode > app/google-services.json
       - name: Assemble Debug APK
         run: gradle :app:assembleDebug
       - name: Upload APK Artifact
@@ -28,11 +24,3 @@ jobs:
         with:
           name: veil-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
-      # Optional: Distribute APK to testers via Firebase App Distribution
-      # - name: Upload to Firebase App Distribution
-      #   uses: wzieba/Firebase-Distribution-Github-Action@v1
-      #   with:
-      #     appId: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
-      #     serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
-      #     groups: testers
-      #     file: app/build/outputs/apk/debug/app-debug.apk

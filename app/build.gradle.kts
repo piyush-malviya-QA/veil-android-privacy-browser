@@ -5,11 +5,6 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-// Automatically applies Google Services once app/google-services.json is placed from Firebase Console
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
-}
-
 android {
     namespace = "com.veil.browser"
     compileSdk = 35
@@ -20,13 +15,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
-
-        buildConfigField("String", "FIREBASE_PROJECT_ID", "\"gen-lang-client-0078851774\"")
-        buildConfigField(
-            "String",
-            "FIRESTORE_DATABASE_ID",
-            "\"ai-studio-veilandroidpriva-79384458-5581-46fb-a992-b7e14a2ff883\""
-        )
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
@@ -53,13 +41,7 @@ dependencies {
     implementation("org.mozilla.geckoview:geckoview:134.0.20250113121357")
 
     // Embedded Tor: Guardian Project tor-android (no separate jtorctl dependency)
-    implementation("info.guardianproject:tor-android:0.4.9.17")
-
-    // Firebase Auth & Cloud Firestore (NF-U3 E2EE & Bookmark Sync)
-    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0")
+    implementation("info.guardianproject:tor-android:0.4.8.16.2")
 
     // Jetpack Compose UI Shell
     implementation(platform("androidx.compose:compose-bom:2025.01.00"))
