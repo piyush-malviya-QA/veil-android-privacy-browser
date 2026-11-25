@@ -1,0 +1,12 @@
+# GeckoView Tor Isolation Startup Preferences (PRD TOR-3, TOR-4, NF-2, PF-5)
+prefs:
+  network.proxy.type: 1
+  network.proxy.socks: "127.0.0.1"
+  network.proxy.socks_port: 9050
+  network.proxy.socks_remote_dns: true
+  network.dns.blockDotOnion: false
+  network.dns.disablePrefetch: true
+  network.http.speculative-parallel-limit: 0
+  media.peerconnection.enabled: false
+  privacy.resistFingerprinting: true
+  dom.security.https_only_mode: true

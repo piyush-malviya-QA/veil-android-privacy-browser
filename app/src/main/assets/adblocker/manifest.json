@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Veil Built-in Ad & Tracker Blocker",
+  "version": "1.0.0",
+  "description": "Evaluates EasyList, EasyPrivacy, and Fanboy's Annoyance List via adblock-rust WASM.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "adblocker@veil.browser"
+    }
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "geckoViewAddons",
+    "nativeMessaging",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["cosmetic.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}
